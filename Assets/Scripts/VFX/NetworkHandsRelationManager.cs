@@ -90,10 +90,14 @@ public class NetworkHandsRelationManager : NetworkBehaviour
 
     public override void OnNetworkDespawn()
     {
-        foreach (var affordance in affordanceController.affordanceControls)
+        if (affordanceController!=null && affordanceController.affordanceControls.Count > 0)
         {
-            affordance.OnEnableChange -= onAffordanceEnableChangServerRpc;
+            foreach (var affordance in affordanceController.affordanceControls)
+            {
+                affordance.OnEnableChange -= onAffordanceEnableChangServerRpc;
+            }
         }
+        
 
         if (IsOwner && Instance == this)
         {
